@@ -1,9 +1,11 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
+import { Web3Provider } from "./Web3Provider";
+import { ConnectKitButton } from "connectkit";
 
 function App() {
 
   return (
-    <>
+    <Web3Provider>
       <HashRouter>
         <Routes>
           <Route
@@ -19,10 +21,11 @@ function App() {
                  <h1 className="text-3xl font-bold underline">
                   Hello world!
                 </h1>
+                <ConnectKitButton />
               </>} />
         </Routes>
       </HashRouter>
-    </>
+    </Web3Provider>
   )
 }
 
