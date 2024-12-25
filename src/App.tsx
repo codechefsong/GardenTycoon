@@ -1,6 +1,7 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import { Web3Provider } from "./Web3Provider";
 import { ConnectKitButton } from "connectkit";
+import PlantNFTPage from './pages/PlantNFTPage';
 
 function App() {
 
@@ -9,11 +10,8 @@ function App() {
       <HashRouter>
         <Routes>
           <Route
-            path="/test"
-            element={
-              <>
-                <h1>Test</h1>
-              </>} />
+            path="/buyplant"
+            element={<PlantNFTPage />} />
           <Route
             path="/"
             element={
