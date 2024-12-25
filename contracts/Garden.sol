@@ -1,7 +1,11 @@
 //SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 
+import "./StemPoints.sol";
+
 contract Garden {
+    StemPoints stemPoints;
+
     address public immutable owner;
     uint256 public totalPlants;
     Plant[] public plants;
@@ -13,8 +17,9 @@ contract Garden {
         uint256 level;
     }
 
-    constructor(address _owner) {
+    constructor(address _owner, address stemPointsAddress) {
         owner = _owner;
+        stemPoints = StemPoints(stemPointsAddress);
     }
 
     modifier isOwner() {
