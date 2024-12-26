@@ -1,6 +1,6 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import { Web3Provider } from "./Web3Provider";
-import { ConnectKitButton } from "connectkit";
+import Gardens from './pages/Gardens';
 import PlantNFTPage from './pages/PlantNFTPage';
 
 function App() {
@@ -14,13 +14,7 @@ function App() {
             element={<PlantNFTPage />} />
           <Route
             path="/"
-            element={
-              <>
-                 <h1 className="text-3xl font-bold underline">
-                  Hello world!
-                </h1>
-                <ConnectKitButton />
-              </>} />
+            element={<Gardens />} />
         </Routes>
       </HashRouter>
     </Web3Provider>
