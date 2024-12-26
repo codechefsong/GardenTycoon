@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Flower2 } from 'lucide-react';
 
 type Plant = {
@@ -13,6 +14,8 @@ type Garden = {
 };
 
 const Gardens = () => {
+  const navigate = useNavigate();
+
   const [gardens] = useState<Garden[]>([
     {
       owner: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
@@ -57,8 +60,8 @@ const Gardens = () => {
   };
 
   const handleViewGarden = (owner: string) => {
-    // Add your navigation logic here
     console.log(`Viewing garden of ${owner}`);
+    navigate("/gardenprofile");
   };
 
   return (

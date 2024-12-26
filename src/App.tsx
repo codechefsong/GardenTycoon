@@ -3,6 +3,7 @@ import { Web3Provider } from "./Web3Provider";
 import Navbar from './components/Navbar';
 import Gardens from './pages/Gardens';
 import PlantNFTPage from './pages/PlantNFTPage';
+import GardenProfile from './pages/GardenProfile';
 
 function App() {
 
@@ -14,6 +15,9 @@ function App() {
           <Route
             path="/buyplant"
             element={<PlantNFTPage />} />
+          <Route
+            path="/gardenprofile"
+            element={<GardenProfile />} />
           <Route
             path="/"
             element={<Gardens />} />
