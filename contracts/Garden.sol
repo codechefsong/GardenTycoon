@@ -7,6 +7,7 @@ contract Garden {
     StemPoints stemPoints;
 
     address public immutable owner;
+    address public coOwner;
     uint256 public totalPlants;
     Plant[] public plants;
 
@@ -27,8 +28,8 @@ contract Garden {
         _;
     }
 
-    function getPlants() public view returns (Plant[] memory){
-        return plants;
+    function setCoOwner(address newCoOwner) public isOwner {
+        coOwner = newCoOwner;
     }
 
     function createPlant() public {
@@ -37,5 +38,9 @@ contract Garden {
 
     function waterPlant(uint256 index) public {
         plants[index].lastTimeWater = block.timestamp;
+    }
+
+    function getPlants() public view returns (Plant[] memory){
+        return plants;
     }
 }
