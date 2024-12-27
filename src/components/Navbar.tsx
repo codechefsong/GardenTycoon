@@ -13,7 +13,7 @@ const Navbar = () => {
 
   const navItems: NavItem[] = [
     { label: 'Home', href: '/' },
-    { label: 'Buy Garden', href: '/buyplant' },
+    { label: 'Buy Garden', href: '/buyGarden' },
   ];
 
   return (
