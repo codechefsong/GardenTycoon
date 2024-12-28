@@ -6,10 +6,12 @@ import "./StemPoints.sol";
 contract Garden {
     StemPoints stemPoints;
 
+    Plant[] public plants;
     address public immutable owner;
     address public coOwner;
     uint256 public totalPlants;
-    Plant[] public plants;
+    uint256 public lastTimeAttackByInsect;
+    bool isDanger;
 
     struct Plant {
         uint256 id;
@@ -40,6 +42,11 @@ contract Garden {
     function waterPlant(uint256 index) public {
         plants[index].lastTimeWater = block.timestamp;
         earnEXP(index);
+    }
+
+    function buyAndPlantInsect(uint256 index) public {
+        lastTimeAttackByInsect = block.timestamp + 10;
+        isDanger = true;
     }
 
     function earnEXP(uint256 index) internal  {
