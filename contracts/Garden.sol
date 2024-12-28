@@ -16,6 +16,7 @@ contract Garden {
         uint256 timeBorn;
         uint256 lastTimeWater;
         uint256 level;
+        uint8 exp;
     }
 
     constructor(address _owner, address stemPointsAddress) {
@@ -33,11 +34,21 @@ contract Garden {
     }
 
     function createPlant() public {
-        plants.push(Plant(totalPlants, block.timestamp, block.timestamp, 1));
+        plants.push(Plant(totalPlants, block.timestamp, block.timestamp, 1, 0));
     }
 
     function waterPlant(uint256 index) public {
         plants[index].lastTimeWater = block.timestamp;
+        earnEXP(index);
+    }
+
+    function earnEXP(uint256 index) internal  {
+        plants[index].exp += 1;
+
+        if (plants[index].exp >= 5) {
+            plants[index].exp = 0;
+            plants[index].level += 1;
+        }
     }
 
     function getPlants() public view returns (Plant[] memory){
