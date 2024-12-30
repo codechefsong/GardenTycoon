@@ -9,6 +9,8 @@ contract GardenFactory {
     StemPoints stemPoints;
 
     mapping(address => address) public playerGardenAddress;
+    mapping(address => bool) public isPlayer;
+    address[] public players;
 
     constructor(address stemPointsAddress) {
         stemPoints = StemPoints(stemPointsAddress);
@@ -17,9 +19,19 @@ contract GardenFactory {
     function buyGarden() public {
         Garden newGarden = new Garden(msg.sender, address(stemPoints));
         playerGardenAddress[msg.sender] = address(newGarden);
+
+        if (!isPlayer[msg.sender]) {
+            players.push(msg.sender);
+        }
+
+        isPlayer[msg.sender] = true;
     }
 
-    function getPlayerGardenAddresses(address player) public view returns (address){
+    function getPlayerGardenAddress(address player) public view returns (address){
         return playerGardenAddress[player];
+    }
+
+    function getPlayers() public view returns (address[] memory){
+        return players;
     }
 }
