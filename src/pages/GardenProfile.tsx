@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Plus, Droplets } from 'lucide-react';
+import { useReadContract, useAccount } from 'wagmi';
+import { gardenFactoryConfig } from '../contracts';
 
 interface Plant {
   id: string;
@@ -10,8 +12,17 @@ interface Plant {
 }
 
 export default function GardenProfile() {
+  const { address } = useAccount();
+
   const [plants, setPlants] = useState<Plant[]>([]);
   const [newPlantName, setNewPlantName] = useState('');
+
+  const { data: playerGardenAddress } = useReadContract({
+    address: gardenFactoryConfig.address,
+    abi: gardenFactoryConfig.abi,
+    functionName: 'getPlayerGardenAddresses',
+    args: [address]
+  });
 
   const plantSeed = () => {
     if (!newPlantName.trim()) return;
@@ -46,7 +57,7 @@ export default function GardenProfile() {
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">My Garden</h1>
-          
+          <p>{playerGardenAddress}</p>
           <div className="bg-white rounded-lg shadow-md mb-6 p-6">
             <h2 className="text-xl font-semibold mb-4">Plant a New Seed</h2>
             <div className="flex gap-4">

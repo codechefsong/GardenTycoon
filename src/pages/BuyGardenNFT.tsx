@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Trees, Flower2, Loader2 } from 'lucide-react';
+import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { gardenFactoryConfig } from '../contracts';
 
 interface Garden {
   id: string;
@@ -41,8 +43,21 @@ const BuyGardenNFT = () => {
     }
   };
 
+  const { data: hash, error, isPending, writeContract } = useWriteContract()
+
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = 
+    useWaitForTransactionReceipt({
+      hash,
+    })
+
   const handlePurchase = async () => {
     setIsLoading(true);
+
+    writeContract({
+      address: gardenFactoryConfig.address,
+      abi: gardenFactoryConfig.abi,
+      functionName: 'buyGarden',
+    })
 
     setIsLoading(false);
     alert('Purchase successful! (This is a demo)');
@@ -136,6 +151,9 @@ const BuyGardenNFT = () => {
               )}
             </button>
           </div>
+          {error && <div className="text-red-500 mt-2">Error: {error.message}</div>}
+          {isConfirming && <div>Waiting for confirmation...</div>}
+          {isConfirmed && <div className="text-green-500">Transaction confirmed!</div>}
         </div>
       </div>
     </div>
