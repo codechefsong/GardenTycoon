@@ -10,7 +10,7 @@ const config = createConfig(
     chains: [lensSepolia],
     transports: {
       // RPC URL for each chain
-      [lensSepolia.id]: http(lensSepolia.rpcUrls.default),
+      [lensSepolia.id]: http("https://rpc.testnet.lens.dev"),
     },
 
     // Required API Keys

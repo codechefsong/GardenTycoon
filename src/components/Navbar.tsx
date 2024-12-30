@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ConnectKitButton } from "connectkit";
 import { Menu, X } from 'lucide-react';
+import { useReadContract, useAccount } from 'wagmi';
+import { stemPointsConfig } from '../contracts';
 
 interface NavItem {
   label: string;
@@ -10,6 +12,14 @@ interface NavItem {
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { address } = useAccount();
+
+  const { data: balance } = useReadContract({
+    address: stemPointsConfig.address,
+    abi: stemPointsConfig.abi,
+    functionName: 'balanceOf',
+    args: [address],
+  })
 
   const navItems: NavItem[] = [
     { label: 'Home', href: '/' },
@@ -37,6 +47,7 @@ const Navbar = () => {
                 {item.label}
               </Link>
             ))}
+             <div>{balance?.toString()} SP</div>
             <ConnectKitButton />
           </div>
 
@@ -65,6 +76,7 @@ const Navbar = () => {
                 {item.label}
               </a>
             ))}
+            <div className='ml-3'>{balance?.toString()} SP</div>
             <div className="pt-2">
               <ConnectKitButton />
             </div>

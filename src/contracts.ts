@@ -1,5 +1,5 @@
 export const stemPointsConfig = {
-  "address": '0xcfA7194a5e5D3D483c8fA492Ab9805b4183247dd',
+  "address": "0xcfA7194a5e5D3D483c8fA492Ab9805b4183247dd",
   "abi": [
     {
       "inputs": [],
