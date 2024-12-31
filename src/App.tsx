@@ -18,7 +18,7 @@ function App() {
           path="/buyGarden"
           element={<BuyGardenNFT />} />
         <Route
-          path="/gardenprofile"
+          path="/gardenprofile/:playeraddress"
           element={<GardenProfile />} />
         <Route
           path="/"

@@ -353,7 +353,7 @@ export const stemPointsConfig = {
   ],
 }
 export const gardenFactoryConfig = {
-  "address": '0x699C5f2C3087b0D5132f07318067eA96c41A241b',
+  "address": '0xdB1f33A9d688Fb5abccc593cCc360A5C98fded93',
   "abi": [
     {
       "inputs": [
@@ -381,12 +381,44 @@ export const gardenFactoryConfig = {
           "type": "address"
         }
       ],
-      "name": "getPlayerGardenAddresses",
+      "name": "getPlayerGardenAddress",
       "outputs": [
         {
           "internalType": "address",
           "name": "",
           "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getPlayers",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "isPlayer",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
         }
       ],
       "stateMutability": "view",
@@ -401,6 +433,25 @@ export const gardenFactoryConfig = {
         }
       ],
       "name": "playerGardenAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "players",
       "outputs": [
         {
           "internalType": "address",
@@ -433,13 +484,7 @@ export const gardenyConfig = {
       "type": "constructor"
     },
     {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "index",
-          "type": "uint256"
-        }
-      ],
+      "inputs": [],
       "name": "buyAndPlantInsect",
       "outputs": [],
       "stateMutability": "nonpayable",
@@ -456,6 +501,19 @@ export const gardenyConfig = {
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "collectPoints",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -484,6 +542,11 @@ export const gardenyConfig = {
             {
               "internalType": "uint256",
               "name": "lastTimeWater",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lastTimeCollected",
               "type": "uint256"
             },
             {
@@ -554,6 +617,11 @@ export const gardenyConfig = {
         {
           "internalType": "uint256",
           "name": "lastTimeWater",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "lastTimeCollected",
           "type": "uint256"
         },
         {
