@@ -1,20 +1,11 @@
 import { useState } from 'react';
 import { Plus, Droplets } from 'lucide-react';
-import { useReadContract, useAccount } from 'wagmi';
-import { gardenFactoryConfig } from '../contracts';
-
-interface Plant {
-  id: string;
-  name: string;
-  waterLevel: number;
-  plantedDate: Date;
-  lastWatered: Date;
-}
+import { useReadContract, useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi';
+import { gardenFactoryConfig, gardenyConfig } from '../contracts';
 
 export default function GardenProfile() {
   const { address } = useAccount();
 
-  const [plants, setPlants] = useState<Plant[]>([]);
   const [newPlantName, setNewPlantName] = useState('');
 
   const { data: playerGardenAddress } = useReadContract({
@@ -24,18 +15,27 @@ export default function GardenProfile() {
     args: [address]
   });
 
+  const { data: playerPlants } = useReadContract({
+    address: playerGardenAddress,
+    abi: gardenyConfig.abi,
+    functionName: 'getPlants',
+  });
+
+  const { data: hash, error, isPending, writeContract  } = useWriteContract();
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = 
+      useWaitForTransactionReceipt({
+        hash,
+      });
+
   const plantSeed = () => {
     if (!newPlantName.trim()) return;
 
-    const newPlant: Plant = {
-      id: Math.random().toString(36).substring(7),
-      name: newPlantName,
-      waterLevel: 100,
-      plantedDate: new Date(),
-      lastWatered: new Date(),
-    };
+    writeContract({
+      address: playerGardenAddress,
+      abi: gardenyConfig.abi,
+      functionName: 'createPlant',
+    })
 
-    setPlants([...plants, newPlant]);
     setNewPlantName('');
   };
 
@@ -51,6 +51,8 @@ export default function GardenProfile() {
       return plant;
     }));
   };
+
+  console.log(playerPlants)
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
@@ -79,13 +81,13 @@ export default function GardenProfile() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {plants.map((plant) => (
-              <div key={plant.id} className="bg-white rounded-lg shadow-md p-6">
+            {playerPlants?.map((plant) => (
+              <div key={plant.id.toString()} className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex justify-between items-center mb-4">
                   <div>
                     <h3 className="text-lg font-semibold">{plant.name}</h3>
                     <p className="text-sm text-gray-500">
-                      Planted: {plant.plantedDate.toLocaleDateString()}
+                      Planted: {plant?.timeBorn?.toString()}
                     </p>
                   </div>
                   <button
@@ -104,10 +106,10 @@ export default function GardenProfile() {
                   />
                 </div>
                 <p className="text-sm text-gray-500 mt-2">
-                  Water Level: {plant.waterLevel}%
+                  Level: {plant.level.toString()}
                 </p>
                 <p className="text-sm text-gray-500">
-                  Last Watered: {plant.lastWatered.toLocaleDateString()}
+                  Last Watered: {plant?.lastTimeWater?.toString()}
                 </p>
               </div>
             ))}
