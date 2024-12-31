@@ -17,6 +17,7 @@ contract Garden {
         uint256 id;
         uint256 timeBorn;
         uint256 lastTimeWater;
+        uint256 lastTimeCollected;
         uint256 level;
         uint8 exp;
     }
@@ -36,7 +37,8 @@ contract Garden {
     }
 
     function createPlant() public {
-        plants.push(Plant(totalPlants, block.timestamp, block.timestamp, 1, 0));
+        plants.push(Plant(totalPlants, block.timestamp, block.timestamp, block.timestamp, 1, 0));
+        totalPlants++;
     }
 
     function waterPlant(uint256 index) public {
@@ -44,7 +46,13 @@ contract Garden {
         earnEXP(index);
     }
 
-    function buyAndPlantInsect(uint256 index) public {
+    function collectPoints(uint256 index) isOwner external {
+        uint256 amount = block.timestamp - plants[index].lastTimeCollected;
+        stemPoints.mint(msg.sender, amount * plants[index].level);
+        plants[index].lastTimeCollected = block.timestamp;
+    }
+
+    function buyAndPlantInsect() public {
         lastTimeAttackByInsect = block.timestamp + 10;
         isDanger = true;
     }
