@@ -23,8 +23,8 @@ const BuyGardenNFT = () => {
     theme: "Japanese Garden",
     features: ["Koi Pond", "Cherry Blossoms", "Stone Lanterns", "Bamboo Grove"],
     size: "1,000 sq ft",
-    price: 0.8,
-    imageUrl: "/api/placeholder/300/300",
+    price: 0.001,
+    // imageUrl: "/api/placeholder/300/300",
     rarity: "Rare"
   };
 
@@ -60,7 +60,6 @@ const BuyGardenNFT = () => {
     })
 
     setIsLoading(false);
-    alert('Purchase successful! (This is a demo)');
   };
 
   return (
@@ -78,13 +77,13 @@ const BuyGardenNFT = () => {
           </div>
 
           <div className="p-6">
-            <div className="relative aspect-square mb-4 rounded-lg overflow-hidden">
+            {/* <div className="relative aspect-square mb-4 rounded-lg overflow-hidden">
               <img
                 src={garden.imageUrl}
                 alt={garden.name}
                 className="object-cover w-full h-full"
               />
-            </div>
+            </div> */}
             
             <div className="space-y-3">
               <div className="flex items-center justify-between">
