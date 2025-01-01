@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Plus, Droplets, Flower } from 'lucide-react';
+import { Plus, Droplets, Flower, UserPlus } from 'lucide-react';
 import { useReadContract, useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi';
 import { gardenFactoryConfig, gardenyConfig } from '../contracts';
 
@@ -10,6 +10,7 @@ export default function GardenProfile() {
   const { playeraddress } = useParams();
 
   const [newPlantName, setNewPlantName] = useState('');
+  const [coOwner, setCoOwner] = useState<string>('');
 
   const { data: playerGardenAddress } = useReadContract({
     address: gardenFactoryConfig.address,
@@ -22,6 +23,12 @@ export default function GardenProfile() {
     address: playerGardenAddress,
     abi: gardenyConfig.abi,
     functionName: 'getPlants',
+  });
+
+  const { data: coOwnerAddress } = useReadContract({
+    address: playerGardenAddress,
+    abi: gardenyConfig.abi,
+    functionName: 'coOwner',
   });
 
   const { data: hash, error, isPending, writeContract  } = useWriteContract();
@@ -60,6 +67,15 @@ export default function GardenProfile() {
     })
   };
 
+  const addCoOwner = () => {
+    writeContract({
+      address: playerGardenAddress,
+      abi: gardenyConfig.abi,
+      functionName: 'setCoOwner',
+      args: [coOwner]
+    })
+  };
+
   console.log(playerPlants)
 
   return (
@@ -68,6 +84,7 @@ export default function GardenProfile() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">{playeraddress.slice(0, 6)}...{playeraddress.slice(-4)} Garden</h1>
           <p className='mb-3'>Garden Address {playerGardenAddress}</p>
+          <p className='mb-3'>Co Owner {coOwnerAddress}</p>
           {myAddress === playeraddress && <div className="bg-white rounded-lg shadow-md mb-6 p-6">
             <h2 className="text-xl font-semibold mb-4">Plant a New Seed</h2>
             <div className="flex gap-4">
@@ -84,6 +101,25 @@ export default function GardenProfile() {
               >
                 <Plus className="mr-2 h-4 w-4" />
                 Plant Seed
+              </button>
+            </div>
+          </div>}
+
+          {myAddress === playeraddress && <div className="bg-white rounded-lg shadow-md mb-6 p-6">
+            <h2 className="text-xl font-semibold mb-4">Garden Co-owners</h2>
+            <div className="flex gap-4 mb-4">
+              <input
+                placeholder="Enter co-owner address"
+                value={coOwner}
+                onChange={(e) => setCoOwner(e.target.value)}
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              <button
+                onClick={addCoOwner}
+                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+              >
+                <UserPlus className="mr-2 h-4 w-4" />
+                Add Co-owner
               </button>
             </div>
           </div>}
