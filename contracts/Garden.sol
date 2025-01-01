@@ -20,7 +20,14 @@ contract Garden {
         uint256 lastTimeCollected;
         uint256 level;
         uint8 exp;
+        string name;
     }
+
+    event Timeline (
+        uint256 when,
+        address player,
+        string action
+    );
 
     constructor(address _owner, address stemPointsAddress) {
         owner = _owner;
@@ -36,20 +43,23 @@ contract Garden {
         coOwner = newCoOwner;
     }
 
-    function createPlant() public {
-        plants.push(Plant(totalPlants, block.timestamp, block.timestamp, block.timestamp, 1, 0));
+    function createPlant(string calldata name) public {
+        plants.push(Plant(totalPlants, block.timestamp, block.timestamp, block.timestamp, 1, 0, name));
         totalPlants++;
+        emit Timeline(block.timestamp, msg.sender, "Create Plant");
     }
 
     function waterPlant(uint256 index) public {
         plants[index].lastTimeWater = block.timestamp;
         earnEXP(index);
+        emit Timeline(block.timestamp, msg.sender, "Water Plant");
     }
 
     function collectPoints(uint256 index) isOwner external {
         uint256 amount = block.timestamp - plants[index].lastTimeCollected;
         stemPoints.mint(msg.sender, amount * plants[index].level);
         plants[index].lastTimeCollected = block.timestamp;
+        emit Timeline(block.timestamp, msg.sender, "Collect Points");
     }
 
     function buyAndPlantInsect() public {

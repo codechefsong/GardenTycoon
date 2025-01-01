@@ -1,16 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Plus, Droplets, Flower, UserPlus } from 'lucide-react';
-import { useReadContract, useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi';
+import {
+  useReadContract,
+  useWriteContract,
+  useWaitForTransactionReceipt,
+  useAccount,
+  useWatchContractEvent,
+  usePublicClient,
+  useBlockNumber,
+ } from 'wagmi';
 import { gardenFactoryConfig, gardenyConfig } from '../contracts';
 
 export default function GardenProfile() {
   const { address: myAddress } = useAccount();
+  const { data: blockNumber } = useBlockNumber();
+  const publicClient = usePublicClient();
 
   const { playeraddress } = useParams();
 
   const [newPlantName, setNewPlantName] = useState('');
   const [coOwner, setCoOwner] = useState<string>('');
+  const [events, setEvents] = useState<any[]>([]);
+  const [historicalEvents, setHistoricalEvents] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { data: playerGardenAddress } = useReadContract({
     address: gardenFactoryConfig.address,
@@ -31,6 +44,38 @@ export default function GardenProfile() {
     functionName: 'coOwner',
   });
 
+  useWatchContractEvent({
+    address: playerGardenAddress,
+    abi: gardenyConfig.abi,
+    eventName: 'Timeline',
+    onLogs: (logs) => {
+      setEvents(prev => [...prev, ...logs])
+    },
+  })
+
+  useEffect(() => {
+    async function getEvents() {
+      if (!blockNumber) return;
+      
+      setIsLoading(true);
+      try {
+        const logs = await publicClient.getContractEvents({
+          address: playerGardenAddress,
+          abi: gardenyConfig.abi,
+          eventName: 'Timeline',
+          fromBlock: blockNumber - BigInt(1000), // Last 1000 blocks
+          toBlock: blockNumber
+        })
+        setHistoricalEvents(logs)
+      } catch (error) {
+        console.error('Failed to fetch events:', error)
+      }
+      setIsLoading(false)
+    }
+
+    getEvents()
+  }, [blockNumber, publicClient])
+
   const { data: hash, error, isPending, writeContract  } = useWriteContract();
   const { isLoading: isConfirming, isSuccess: isConfirmed } = 
       useWaitForTransactionReceipt({
@@ -44,6 +89,7 @@ export default function GardenProfile() {
       address: playerGardenAddress,
       abi: gardenyConfig.abi,
       functionName: 'createPlant',
+      args: [newPlantName],
     })
 
     setNewPlantName('');
@@ -76,7 +122,7 @@ export default function GardenProfile() {
     })
   };
 
-  console.log(playerPlants)
+  console.log(events, historicalEvents);
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
@@ -167,6 +213,29 @@ export default function GardenProfile() {
             ))}
           </div>
         </div>
+      </div>
+      <div className="p-4">
+        <h2 className="text-xl font-bold mb-4">Real-time Events</h2>
+        {events.map((event, index) => (
+          <div key={index} className="mb-2 p-2 border">
+            <p>Player: {event.args.player}</p>
+            <p>Action: {event.args.action}</p>
+            <p>When: {event.args.when.toString()}</p>
+          </div>
+        ))}
+
+        <h2 className="text-xl font-bold mb-4 mt-8">Historical Events</h2>
+        {isLoading ? (
+          <div>Loading historical events...</div>
+        ) : (
+          historicalEvents.map((event, index) => (
+            <div key={index} className="mb-2 p-2 border">
+              <p>Player: {event.args.player}</p>
+              <p>Action: {event.args.action}</p>
+              <p>When: {event.args.when.toString()}</p>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

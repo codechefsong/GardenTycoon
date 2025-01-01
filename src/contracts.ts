@@ -353,7 +353,7 @@ export const stemPointsConfig = {
   ],
 }
 export const gardenFactoryConfig = {
-  "address": '0xdB1f33A9d688Fb5abccc593cCc360A5C98fded93',
+  "address": '0x80c64DaEbB238e090790Ce320FF9d6337757d43a',
   "abi": [
     {
       "inputs": [
@@ -484,6 +484,31 @@ export const gardenyConfig = {
       "type": "constructor"
     },
     {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "when",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "player",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "action",
+          "type": "string"
+        }
+      ],
+      "name": "Timeline",
+      "type": "event"
+    },
+    {
       "inputs": [],
       "name": "buyAndPlantInsect",
       "outputs": [],
@@ -517,7 +542,13 @@ export const gardenyConfig = {
       "type": "function"
     },
     {
-      "inputs": [],
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
       "name": "createPlant",
       "outputs": [],
       "stateMutability": "nonpayable",
@@ -558,6 +589,11 @@ export const gardenyConfig = {
               "internalType": "uint8",
               "name": "exp",
               "type": "uint8"
+            },
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
             }
           ],
           "internalType": "struct Garden.Plant[]",
@@ -633,6 +669,11 @@ export const gardenyConfig = {
           "internalType": "uint8",
           "name": "exp",
           "type": "uint8"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
         }
       ],
       "stateMutability": "view",
