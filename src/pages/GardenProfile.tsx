@@ -11,6 +11,7 @@ import {
   useBlockNumber,
  } from 'wagmi';
 import { gardenFactoryConfig, gardenyConfig } from '../contracts';
+import { formatDate } from '../utils/time';
 
 export default function GardenProfile() {
   const { address: myAddress } = useAccount();
@@ -182,7 +183,7 @@ export default function GardenProfile() {
                       </span>
                     </h3>
                     <p className="text-sm text-gray-500">
-                      Planted: {plant?.timeBorn?.toString()}
+                      Planted: {formatDate(plant?.timeBorn?.toString())}
                     </p>
                   </div>
                   {myAddress === playeraddress && <div className="flex gap-2">
@@ -218,11 +219,11 @@ export default function GardenProfile() {
                 </div>
 
                 <p className="text-sm text-gray-500 mt-2">
-                  Last Time Collected: {plant.lastTimeCollected.toString()}
+                  Last Time Collected: {formatDate(plant.lastTimeCollected.toString())}
                 </p>
 
                 <p className="text-sm text-gray-500">
-                  Last Watered: {plant?.lastTimeWater?.toString()}
+                  Last Watered: {formatDate(plant?.lastTimeWater?.toString())}
                 </p>
               </div>
             ))}
