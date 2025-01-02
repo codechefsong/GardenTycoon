@@ -175,7 +175,12 @@ export default function GardenProfile() {
               <div key={plant.id.toString()} className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex justify-between items-center mb-4">
                   <div>
-                    <h3 className="text-lg font-semibold">{plant.name}</h3>
+                    <h3 className="text-lg font-semibold flex items-center gap-2">
+                      {plant.name}
+                      <span className="text-yellow-500 bg-yellow-50 px-2 py-1 rounded-full text-sm">
+                        Level {plant.level.toString()}
+                      </span>
+                    </h3>
                     <p className="text-sm text-gray-500">
                       Planted: {plant?.timeBorn?.toString()}
                     </p>
@@ -197,15 +202,25 @@ export default function GardenProfile() {
                   </div>}
                 </div>
                 
-                <div className="w-full bg-gray-200 rounded-full h-2.5">
-                  <div
-                    className="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
-                    style={{ width: `${plant.waterLevel}%` }}
-                  />
+                <div className="mt-4">
+                  <div className="flex justify-between text-sm text-gray-600 mb-1">
+                    <span>XP: {plant.exp}</span>
+                    <span>Next Level: {5 - plant.exp}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2.5">
+                    <div
+                      className="bg-purple-600 h-2.5 rounded-full transition-all duration-300"
+                      style={{ 
+                        width: `${(plant.exp / 5) * 100}%`
+                      }}
+                    />
+                  </div>
                 </div>
+
                 <p className="text-sm text-gray-500 mt-2">
-                  Level: {plant.level.toString()}
+                  Last Time Collected: {plant.lastTimeCollected.toString()}
                 </p>
+
                 <p className="text-sm text-gray-500">
                   Last Watered: {plant?.lastTimeWater?.toString()}
                 </p>
