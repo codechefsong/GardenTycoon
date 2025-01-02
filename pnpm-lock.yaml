@@ -7,6 +7,9 @@ dependencies:
   connectkit:
     specifier: ^1.8.2
     version: 1.8.2(@babel/core@7.26.0)(@tanstack/react-query@5.62.9)(react-dom@18.3.1)(react-is@19.0.0)(react@18.3.1)(viem@2.21.57)(wagmi@2.14.5)
+  framer-motion:
+    specifier: ^11.15.0
+    version: 11.15.0(react-dom@18.3.1)(react@18.3.1)
   lucide-react:
     specifier: ^0.469.0
     version: 0.469.0(react@18.3.1)
@@ -3211,6 +3214,27 @@ packages:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
     dev: true
 
+  /framer-motion@11.15.0(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-MLk8IvZntxOMg7lDBLw2qgTHHv664bYoYmnFTmE0Gm/FW67aOJk0WM3ctMcG+Xhcv+vh5uyyXwxvxhSeJzSe+w==}
+    peerDependencies:
+      '@emotion/is-prop-valid': '*'
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      motion-dom: 11.14.3
+      motion-utils: 11.14.3
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      tslib: 2.8.1
+    dev: false
+
   /framer-motion@6.5.1(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-o1BGqqposwi7cgDrtg0dNONhkmPsUFDaLcKXigzuTFC5x58mE8iyTazxSudFzmT6MEyJKfjjU8ItoMe3W+3fiw==}
     peerDependencies:
@@ -3829,6 +3853,14 @@ packages:
       pathe: 1.1.2
       pkg-types: 1.2.1
       ufo: 1.5.4
+    dev: false
+
+  /motion-dom@11.14.3:
+    resolution: {integrity: sha512-lW+D2wBy5vxLJi6aCP0xyxTxlTfiu+b+zcpVbGVFUxotwThqhdpPRSmX8xztAgtZMPMeU0WGVn/k1w4I+TbPqA==}
+    dev: false
+
+  /motion-utils@11.14.3:
+    resolution: {integrity: sha512-Xg+8xnqIJTpr0L/cidfTTBFkvRw26ZtGGuIhA94J9PQ2p4mEa06Xx7QVYZH0BP+EpMSaDlu+q0I0mmvwADPsaQ==}
     dev: false
 
   /motion@10.16.2:

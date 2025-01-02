@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Plus, Droplets, Flower, UserPlus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   useReadContract,
   useWriteContract,
@@ -125,6 +126,41 @@ export default function GardenProfile() {
 
   console.log(events, historicalEvents);
 
+  const plantCardVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: -20,
+      scale: 0.95
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+        bounce: 0.3,
+        type: "spring"
+      }
+    }
+  };
+
+  const sproutVariants = {
+    hidden: { 
+      height: 0,
+      opacity: 0 
+    },
+    visible: { 
+      height: 24,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        delay: 0.3,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto">
@@ -142,13 +178,15 @@ export default function GardenProfile() {
                 onChange={(e) => setNewPlantName(e.target.value)}
                 className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
-              <button
+             <motion.button
                 onClick={plantSeed}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
               >
                 <Plus className="mr-2 h-4 w-4" />
                 Plant Seed
-              </button>
+              </motion.button>
             </div>
           </div>}
 
@@ -172,61 +210,93 @@ export default function GardenProfile() {
           </div>}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {playerPlants?.map((plant) => (
-              <div key={plant.id.toString()} className="bg-white rounded-lg shadow-md p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <div>
-                    <h3 className="text-lg font-semibold flex items-center gap-2">
-                      {plant.name}
-                      <span className="text-yellow-500 bg-yellow-50 px-2 py-1 rounded-full text-sm">
-                        Level {plant.level.toString()}
-                      </span>
-                    </h3>
-                    <p className="text-sm text-gray-500">
-                      Planted: {formatDate(plant?.timeBorn?.toString())}
-                    </p>
+            <AnimatePresence>
+              {playerPlants?.map((plant) => (
+                <motion.div
+                  key={plant.id.toString()}
+                  layout
+                  initial="hidden"
+                  animate="visible"
+                  variants={plantCardVariants}
+                  className="bg-white rounded-lg shadow-md p-6"
+                >
+                  <div className="flex justify-between items-center mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold flex items-center gap-2">
+                        {plant.name}
+                        <span className="text-yellow-500 bg-yellow-50 px-2 py-1 rounded-full text-sm">
+                          Level {plant.level.toString()}
+                        </span>
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        Planted: {formatDate(plant?.timeBorn?.toString())}
+                      </p>
+                    </div>
+                    {myAddress === playeraddress && <div className="flex gap-2">
+                      <motion.button
+                        onClick={() => waterPlant(plant.id)}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                      >
+                        <Droplets className="mr-2 h-4 w-4" />
+                        Water
+                      </motion.button>
+                      <button
+                        onClick={() => collectPoints(plant.id)}
+                        className="flex items-center px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors border-green-300 bg-green-50 hover:bg-green-100 text-green-700">
+                        <Flower className="mr-2 h-4 w-4" />
+                        Collect
+                      </button>
+                    </div>}
                   </div>
-                  {myAddress === playeraddress && <div className="flex gap-2">
-                    <button
-                      onClick={() => waterPlant(plant.id)}
-                      className="flex items-center px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+
+                  <motion.div 
+                    className="flex justify-center mb-4"
+                    variants={sproutVariants}
+                  >
+                    <svg 
+                      viewBox="0 0 24 24" 
+                      width="24" 
+                      height="24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2"
                     >
-                      <Droplets className="mr-2 h-4 w-4" />
-                      Water
-                    </button>
-                    <button
-                      onClick={() => collectPoints(plant.id)}
-                      className="flex items-center px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors border-green-300 bg-green-50 hover:bg-green-100 text-green-700">
-                      <Flower className="mr-2 h-4 w-4" />
-                      Collect
-                    </button>
-                  </div>}
-                </div>
-                
-                <div className="mt-4">
-                  <div className="flex justify-between text-sm text-gray-600 mb-1">
-                    <span>XP: {plant.exp}</span>
-                    <span>Next Level: {5 - plant.exp}</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2.5">
-                    <div
-                      className="bg-purple-600 h-2.5 rounded-full transition-all duration-300"
-                      style={{ 
-                        width: `${(plant.exp / 5) * 100}%`
-                      }}
-                    />
-                  </div>
-                </div>
+                      <path 
+                        d="M12 2L12 22M12 2C12 2 18 8 18 12M12 2C12 2 6 8 6 12" 
+                        stroke="#16a34a"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </motion.div>
+                  
+                  <div className="mt-4">
+                    <div className="flex justify-between text-sm text-gray-600 mb-1">
+                      <span>XP: {plant.exp}</span>
+                      <span>Next Level: {5 - plant.exp}</span>
+                    </div>
 
-                <p className="text-sm text-gray-500 mt-2">
-                  Last Time Collected: {formatDate(plant.lastTimeCollected.toString())}
-                </p>
+                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+                      <motion.div
+                        className="bg-purple-600 h-2.5 rounded-full transition-all duration-300"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${(plant.exp / 5) * 100}%` }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </div>
+                  </div>
 
-                <p className="text-sm text-gray-500">
-                  Last Watered: {formatDate(plant?.lastTimeWater?.toString())}
-                </p>
-              </div>
-            ))}
+                  <p className="text-sm text-gray-500 mt-2">
+                    Last Time Collected: {formatDate(plant.lastTimeCollected.toString())}
+                  </p>
+
+                  <p className="text-sm text-gray-500">
+                    Last Watered: {formatDate(plant?.lastTimeWater?.toString())}
+                  </p>
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         </div>
       </div>
