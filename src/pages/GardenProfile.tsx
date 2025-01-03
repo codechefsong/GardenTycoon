@@ -168,48 +168,8 @@ export default function GardenProfile() {
           <h1 className="text-3xl font-bold text-gray-900 mb-4">{playeraddress.slice(0, 6)}...{playeraddress.slice(-4)} Garden</h1>
           <p className='mb-3'>Garden Address {playerGardenAddress}</p>
           <p className='mb-3'>Co Owner {coOwnerAddress}</p>
-          {myAddress === playeraddress && <div className="bg-white rounded-lg shadow-md mb-6 p-6">
-            <h2 className="text-xl font-semibold mb-4">Plant a New Seed</h2>
-            <div className="flex gap-4">
-              <input
-                type="text"
-                placeholder="Enter plant name"
-                value={newPlantName}
-                onChange={(e) => setNewPlantName(e.target.value)}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-             <motion.button
-                onClick={plantSeed}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
-              >
-                <Plus className="mr-2 h-4 w-4" />
-                Plant Seed
-              </motion.button>
-            </div>
-          </div>}
-
-          {myAddress === playeraddress && <div className="bg-white rounded-lg shadow-md mb-6 p-6">
-            <h2 className="text-xl font-semibold mb-4">Garden Co-owners</h2>
-            <div className="flex gap-4 mb-4">
-              <input
-                placeholder="Enter co-owner address"
-                value={coOwner}
-                onChange={(e) => setCoOwner(e.target.value)}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-              <button
-                onClick={addCoOwner}
-                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
-              >
-                <UserPlus className="mr-2 h-4 w-4" />
-                Add Co-owner
-              </button>
-            </div>
-          </div>}
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
             <AnimatePresence>
               {playerPlants?.map((plant) => (
                 <motion.div
@@ -298,30 +258,72 @@ export default function GardenProfile() {
               ))}
             </AnimatePresence>
           </div>
-        </div>
-      </div>
-      <div className="p-4">
-        <h2 className="text-xl font-bold mb-4">Real-time Events</h2>
-        {events.map((event, index) => (
-          <div key={index} className="mb-2 p-2 border">
-            <p>Player: {event.args.player}</p>
-            <p>Action: {event.args.action}</p>
-            <p>When: {event.args.when.toString()}</p>
-          </div>
-        ))}
 
-        <h2 className="text-xl font-bold mb-4 mt-8">Historical Events</h2>
-        {isLoading ? (
-          <div>Loading historical events...</div>
-        ) : (
-          historicalEvents.map((event, index) => (
-            <div key={index} className="mb-2 p-2 border">
-              <p>Player: {event.args.player}</p>
-              <p>Action: {event.args.action}</p>
-              <p>When: {event.args.when.toString()}</p>
+          {myAddress === playeraddress && <div className="bg-white rounded-lg shadow-md mb-6 p-6">
+            <h2 className="text-xl font-semibold mb-4">Plant a New Seed</h2>
+            <div className="flex gap-4">
+              <input
+                type="text"
+                placeholder="Enter plant name"
+                value={newPlantName}
+                onChange={(e) => setNewPlantName(e.target.value)}
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+             <motion.button
+                onClick={plantSeed}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+              >
+                <Plus className="mr-2 h-4 w-4" />
+                Plant Seed
+              </motion.button>
             </div>
-          ))
-        )}
+          </div>}
+
+          {myAddress === playeraddress && <div className="bg-white rounded-lg shadow-md mb-6 p-6">
+            <h2 className="text-xl font-semibold mb-4">Garden Co-owners</h2>
+            <div className="flex gap-4 mb-4">
+              <input
+                placeholder="Enter co-owner address"
+                value={coOwner}
+                onChange={(e) => setCoOwner(e.target.value)}
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              <button
+                onClick={addCoOwner}
+                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+              >
+                <UserPlus className="mr-2 h-4 w-4" />
+                Add Co-owner
+              </button>
+            </div>
+          </div>}
+
+          <div className="p-4">
+            <h2 className="text-xl font-bold mb-4">Real-time Events</h2>
+            {events.map((event, index) => (
+              <div key={index} className="mb-2 p-2 border">
+                <p>Player: {event.args.player}</p>
+                <p>Action: {event.args.action}</p>
+                <p>When: {event.args.when.toString()}</p>
+              </div>
+            ))}
+
+            <h2 className="text-xl font-bold mb-4 mt-8">Historical Events</h2>
+            {isLoading ? (
+              <div>Loading historical events...</div>
+            ) : (
+              historicalEvents.map((event, index) => (
+                <div key={index} className="mb-2 p-2 border">
+                  <p>Player: {event.args.player}</p>
+                  <p>Action: {event.args.action}</p>
+                  <p>When: {event.args.when.toString()}</p>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
