@@ -4,6 +4,8 @@ pragma solidity >=0.8.0 <0.9.0;
 import "./StemPoints.sol";
 
 contract Garden {
+    error Garden__NotEnoughPointsToLevelUp();
+
     StemPoints stemPoints;
 
     Plant[] public plants;
@@ -60,6 +62,15 @@ contract Garden {
         stemPoints.mint(msg.sender, amount * plants[index].level);
         plants[index].lastTimeCollected = block.timestamp;
         emit Timeline(block.timestamp, msg.sender, "Collect Points");
+    }
+
+    function spentPointsToLevelUpPlant(uint256 index) external {
+        if (stemPoints.balanceOf(msg.sender) < 20 * 10 ** 18 * plants[index].level) {
+            revert Garden__NotEnoughPointsToLevelUp();
+        }
+        stemPoints.burn(msg.sender, 20 * 10 ** 18 * plants[index].level);
+        plants[index].level += 1;
+        emit Timeline(block.timestamp, msg.sender, "Spent Points to level up the plant");
     }
 
     function buyAndPlantInsect() public {
