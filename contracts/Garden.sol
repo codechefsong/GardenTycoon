@@ -90,4 +90,8 @@ contract Garden {
     function getPlants() public view returns (Plant[] memory){
         return plants;
     }
+
+    function getCostToLevelUpPlant(uint256 index) public view returns (uint256){
+        return 20 * 10 ** 18 * plants[index].level;
+    }
 }

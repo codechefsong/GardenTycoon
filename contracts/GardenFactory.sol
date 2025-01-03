@@ -10,7 +10,13 @@ contract GardenFactory {
 
     mapping(address => address) public playerGardenAddress;
     mapping(address => bool) public isPlayer;
-    address[] public players;
+    PlantGarden[] public plantGardens;
+
+    struct PlantGarden {
+        uint256 id;
+        address gardenAddress;
+        address owner;
+    }
 
     constructor(address stemPointsAddress) {
         stemPoints = StemPoints(stemPointsAddress);
@@ -20,18 +26,14 @@ contract GardenFactory {
         Garden newGarden = new Garden(msg.sender, address(stemPoints));
         playerGardenAddress[msg.sender] = address(newGarden);
 
-        if (!isPlayer[msg.sender]) {
-            players.push(msg.sender);
-        }
-
-        isPlayer[msg.sender] = true;
+        plantGardens.push(PlantGarden(plantGardens.length, address(newGarden), msg.sender));
     }
 
     function getPlayerGardenAddress(address player) public view returns (address){
         return playerGardenAddress[player];
     }
 
-    function getPlayers() public view returns (address[] memory){
-        return players;
+    function getGardens() public view returns (PlantGarden[] memory){
+        return plantGardens;
     }
 }

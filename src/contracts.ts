@@ -353,7 +353,7 @@ export const stemPointsConfig = {
   ],
 }
 export const gardenFactoryConfig = {
-  "address": '0x80c64DaEbB238e090790Ce320FF9d6337757d43a',
+  "address": '0xbe8d16abCAF3bBDeEE861e820Fa5D340aCB84f12',
   "abi": [
     {
       "inputs": [
@@ -374,6 +374,36 @@ export const gardenFactoryConfig = {
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "getGardens",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "gardenAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "owner",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct GardenFactory.PlantGarden[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "address",
@@ -387,19 +417,6 @@ export const gardenFactoryConfig = {
           "internalType": "address",
           "name": "",
           "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "getPlayers",
-      "outputs": [
-        {
-          "internalType": "address[]",
-          "name": "",
-          "type": "address[]"
         }
       ],
       "stateMutability": "view",
@@ -427,16 +444,26 @@ export const gardenFactoryConfig = {
     {
       "inputs": [
         {
-          "internalType": "address",
+          "internalType": "uint256",
           "name": "",
-          "type": "address"
+          "type": "uint256"
         }
       ],
-      "name": "playerGardenAddress",
+      "name": "plantGardens",
       "outputs": [
         {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
           "internalType": "address",
-          "name": "",
+          "name": "gardenAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "owner",
           "type": "address"
         }
       ],
@@ -446,12 +473,12 @@ export const gardenFactoryConfig = {
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "address",
           "name": "",
-          "type": "uint256"
+          "type": "address"
         }
       ],
-      "name": "players",
+      "name": "playerGardenAddress",
       "outputs": [
         {
           "internalType": "address",
@@ -482,6 +509,11 @@ export const gardenyConfig = {
       ],
       "stateMutability": "nonpayable",
       "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "Garden__NotEnoughPointsToLevelUp",
+      "type": "error"
     },
     {
       "anonymous": false,
@@ -552,6 +584,25 @@ export const gardenyConfig = {
       "name": "createPlant",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getCostToLevelUpPlant",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -688,6 +739,19 @@ export const gardenyConfig = {
         }
       ],
       "name": "setCoOwner",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "spentPointsToLevelUpPlant",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
