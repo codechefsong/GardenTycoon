@@ -11,8 +11,10 @@ import {
   usePublicClient,
   useBlockNumber,
  } from 'wagmi';
+import PlantVisualization from '../components/PlantVisualization';
 import { gardenFactoryConfig, gardenyConfig } from '../contracts';
 import { formatDate } from '../utils/time';
+import { PLANT_LEVEL, plantCardVariants } from '../utils/plants';
 
 export default function GardenProfile() {
   const { address: myAddress } = useAccount();
@@ -126,41 +128,6 @@ export default function GardenProfile() {
 
   console.log(events, historicalEvents);
 
-  const plantCardVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: -20,
-      scale: 0.95
-    },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-        bounce: 0.3,
-        type: "spring"
-      }
-    }
-  };
-
-  const sproutVariants = {
-    hidden: { 
-      height: 0,
-      opacity: 0 
-    },
-    visible: { 
-      height: 24,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        delay: 0.3,
-        ease: "easeOut"
-      }
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto">
@@ -177,8 +144,10 @@ export default function GardenProfile() {
                   layout
                   initial="hidden"
                   animate="visible"
+                  exit="exit"
                   variants={plantCardVariants}
                   className="bg-white rounded-lg shadow-md p-6"
+                  whileHover={{ y: -5 }}
                 >
                   <div className="flex justify-between items-center mb-4">
                     <div>
@@ -202,33 +171,23 @@ export default function GardenProfile() {
                         <Droplets className="mr-2 h-4 w-4" />
                         Water
                       </motion.button>
-                      <button
+                      <motion.button
                         onClick={() => collectPoints(plant.id)}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                         className="flex items-center px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors border-green-300 bg-green-50 hover:bg-green-100 text-green-700">
                         <Flower className="mr-2 h-4 w-4" />
                         Collect
-                      </button>
+                      </motion.button>
                     </div>}
                   </div>
 
                   <motion.div 
-                    className="flex justify-center mb-4"
-                    variants={sproutVariants}
+                    className="flex justify-center my-4"
+                    animate={{ scale: [0.9, 1.1, 1] }}
+                    transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
                   >
-                    <svg 
-                      viewBox="0 0 24 24" 
-                      width="24" 
-                      height="24" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      strokeWidth="2"
-                    >
-                      <path 
-                        d="M12 2L12 22M12 2C12 2 18 8 18 12M12 2C12 2 6 8 6 12" 
-                        stroke="#16a34a"
-                        strokeLinecap="round"
-                      />
-                    </svg>
+                    <PlantVisualization stage={PLANT_LEVEL[plant.level.toString()]} animate={true} />
                   </motion.div>
                   
                   <div className="mt-4">
@@ -290,13 +249,15 @@ export default function GardenProfile() {
                 onChange={(e) => setCoOwner(e.target.value)}
                 className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
-              <button
+              <motion.button
                 onClick={addCoOwner}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
               >
                 <UserPlus className="mr-2 h-4 w-4" />
                 Add Co-owner
-              </button>
+              </motion.button>
             </div>
           </div>}
 
