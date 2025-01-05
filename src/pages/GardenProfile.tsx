@@ -12,6 +12,7 @@ import {
   useBlockNumber,
  } from 'wagmi';
 import PlantVisualization from '../components/PlantVisualization';
+import TimeLine from '../components/TimeLine';
 import { gardenFactoryConfig, gardenyConfig } from '../contracts';
 import { formatDate } from '../utils/time';
 import { PLANT_LEVEL, plantCardVariants } from '../utils/plants';
@@ -67,7 +68,7 @@ export default function GardenProfile() {
           address: playerGardenAddress,
           abi: gardenyConfig.abi,
           eventName: 'Timeline',
-          fromBlock: blockNumber - BigInt(1000), // Last 1000 blocks
+          fromBlock: blockNumber - BigInt(5000), // Last x blocks
           toBlock: blockNumber
         })
         setHistoricalEvents(logs)
@@ -126,6 +127,15 @@ export default function GardenProfile() {
     })
   };
 
+  const levelUp = (plantId: string) => {
+    writeContract({
+      address: playerGardenAddress,
+      abi: gardenyConfig.abi,
+      functionName: 'spentPointsToLevelUpPlant',
+      args: [plantId]
+    })
+  };
+
   console.log(events, historicalEvents);
 
   return (
@@ -178,6 +188,14 @@ export default function GardenProfile() {
                         className="flex items-center px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors border-green-300 bg-green-50 hover:bg-green-100 text-green-700">
                         <Flower className="mr-2 h-4 w-4" />
                         Collect
+                      </motion.button>
+                      <motion.button
+                        onClick={() => levelUp(plant.id)}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors border-green-300 bg-green-50 hover:bg-green-100 text-green-700">
+                        <Flower className="mr-2 h-4 w-4" />
+                        Level Up
                       </motion.button>
                     </div>}
                   </div>
@@ -261,29 +279,10 @@ export default function GardenProfile() {
             </div>
           </div>}
 
-          <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Real-time Events</h2>
-            {events.map((event, index) => (
-              <div key={index} className="mb-2 p-2 border">
-                <p>Player: {event.args.player}</p>
-                <p>Action: {event.args.action}</p>
-                <p>When: {event.args.when.toString()}</p>
-              </div>
-            ))}
-
-            <h2 className="text-xl font-bold mb-4 mt-8">Historical Events</h2>
-            {isLoading ? (
-              <div>Loading historical events...</div>
-            ) : (
-              historicalEvents.map((event, index) => (
-                <div key={index} className="mb-2 p-2 border">
-                  <p>Player: {event.args.player}</p>
-                  <p>Action: {event.args.action}</p>
-                  <p>When: {event.args.when.toString()}</p>
-                </div>
-              ))
-            )}
-          </div>
+          <TimeLine
+            events={events}
+            historicalEvents={historicalEvents}
+            isLoading={isLoading} />
         </div>
       </div>
     </div>
