@@ -4,6 +4,7 @@ import Gardens from './pages/Gardens';
 import PlantNFTPage from './pages/PlantNFTPage';
 import BuyGardenNFT from './pages/BuyGardenNFT';
 import GardenProfile from './pages/GardenProfile';
+import LandingPage from './pages/Landing';
 
 function App() {
 
@@ -21,8 +22,11 @@ function App() {
           path="/gardenprofile/:playeraddress"
           element={<GardenProfile />} />
         <Route
-          path="/"
+          path="/gardens"
           element={<Gardens />} />
+        <Route
+          path="/"
+          element={<LandingPage />} />
       </Routes>
     </HashRouter>
   )

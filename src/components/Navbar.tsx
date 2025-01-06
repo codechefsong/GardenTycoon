@@ -23,6 +23,7 @@ const Navbar = () => {
 
   const navItems: NavItem[] = [
     { label: 'Home', href: '/' },
+    { label: 'Gardens', href: '/gardens' },
     { label: 'Buy Garden', href: '/buyGarden' },
   ];
 
@@ -31,8 +32,8 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="text-xl font-bold text-gray-800">
-              Garden Tycoon
+            <Link to="/" className="w-[100px]">
+              <img src="logo.png" alt="logo" />
             </Link>
           </div>
 
