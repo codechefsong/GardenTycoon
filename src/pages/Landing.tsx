@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ChevronRight, } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
+  const navigate = useNavigate();
+
   const howItWorks = [
     {
       icon: <img className="w-16 h-16 text-green-500" src="/icon1.png" alt="Icon 1"/>,
@@ -37,6 +40,7 @@ const LandingPage: React.FC = () => {
           </p>
           <button 
             className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-full text-lg transition-colors duration-200 flex items-center justify-center mx-auto"
+            onClick={() =>  navigate("/gardens")}
           >
             Start Gardening Now
             <ChevronRight className="ml-2 h-5 w-5" />
@@ -79,6 +83,7 @@ const LandingPage: React.FC = () => {
         </p>
         <button 
           className="bg-green-600 hover:bg-green-700 text-white px-6 py-4 rounded-full transition-colors duration-200 flex items-center justify-center mx-auto"
+          onClick={() =>  navigate("/gardens")}
         >
           Play Now
           <ChevronRight className="ml-2 h-5 w-5" />

@@ -15,6 +15,7 @@ import PlantVisualization from '../components/PlantVisualization';
 import TimeLine from '../components/TimeLine';
 import { gardenFactoryConfig, gardenyConfig } from '../contracts';
 import { formatDate } from '../utils/time';
+import { formatAddress } from '../utils/address';
 import { PLANT_LEVEL, plantCardVariants } from '../utils/plants';
 
 export default function GardenProfile() {
@@ -158,10 +159,8 @@ export default function GardenProfile() {
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">{playeraddress && playeraddress.slice(0, 6)}...{playeraddress && playeraddress.slice(-4)} Garden</h1>
-          <p className='mb-3'>Garden Address {playerGardenAddress}</p>
-          <p className='mb-3'>Co Owner {coOwnerAddress}</p>
-          
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">Garden {playerGardenAddress && formatAddress(playerGardenAddress)}</h1>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
             <AnimatePresence>
               {playerPlants?.map((plant) => (
@@ -258,6 +257,9 @@ export default function GardenProfile() {
               ))}
             </AnimatePresence>
           </div>
+
+          <p className='mb-3'>Owner {playeraddress && formatAddress(playeraddress)}</p>
+          <p className='mb-3'>Co Owner {coOwnerAddress && formatAddress(coOwnerAddress)}</p>
 
           {myAddress === playeraddress && <div className="bg-white rounded-lg shadow-md mb-6 p-6">
             <h2 className="text-xl font-semibold mb-4">Plant a New Seed</h2>

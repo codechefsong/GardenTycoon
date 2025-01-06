@@ -81,7 +81,10 @@ const Navbar = () => {
                 {item.label}
               </a>
             ))}
-            <div className='ml-3'>{balance?.toString()} SP</div>
+            {isConnected && <div className='flex ml-3'>
+              <p>{balance?.toString()}</p>
+              <Coins />
+            </div>}
             <div className="pt-2">
               <ConnectKitButton />
             </div>
