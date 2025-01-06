@@ -159,45 +159,19 @@ export default function GardenProfile() {
                   className="bg-white rounded-lg shadow-md p-6"
                   whileHover={{ y: -5 }}
                 >
-                  <div className="flex justify-between items-center mb-4">
-                    <div>
-                      <h3 className="text-lg font-semibold flex items-center gap-2">
-                        {plant.name}
-                        <span className="text-yellow-500 bg-yellow-50 px-2 py-1 rounded-full text-sm">
-                          Level {plant.level.toString()}
-                        </span>
-                      </h3>
+                  <div className="mb-4">
+                    <h3 className="text-lg font-semibold flex justify-between items-center gap-2">
+                      {plant.name}
+                      <span className="text-yellow-500 bg-yellow-50 px-2 py-1 rounded-full text-sm">
+                        Level {plant.level.toString()}
+                      </span>
+                    </h3>
+                  <div>
+                      
                       <p className="text-sm text-gray-500">
                         Planted: {formatDate(plant?.timeBorn?.toString())}
                       </p>
                     </div>
-                    {myAddress === playeraddress && <div className="flex gap-2">
-                      <motion.button
-                        onClick={() => waterPlant(plant.id)}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="flex items-center px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
-                      >
-                        <Droplets className="mr-2 h-4 w-4" />
-                        Water
-                      </motion.button>
-                      <motion.button
-                        onClick={() => collectPoints(plant.id)}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="flex items-center px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors border-green-300 bg-green-50 hover:bg-green-100 text-green-700">
-                        <Flower className="mr-2 h-4 w-4" />
-                        Collect
-                      </motion.button>
-                      <motion.button
-                        onClick={() => levelUp(plant.id)}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="flex items-center px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors border-green-300 bg-green-50 hover:bg-green-100 text-green-700">
-                        <Flower className="mr-2 h-4 w-4" />
-                        Level Up
-                      </motion.button>
-                    </div>}
                   </div>
 
                   <motion.div 
@@ -231,6 +205,39 @@ export default function GardenProfile() {
                   <p className="text-sm text-gray-500">
                     Last Watered: {formatDate(plant?.lastTimeWater?.toString())}
                   </p>
+                  {myAddress === playeraddress && <div className="flex gap-2 mt-3">
+                    <motion.button
+                      onClick={() => waterPlant(plant.id)}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex items-center px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                    >
+                      <Droplets className="mr-2 h-4 w-4" />
+                      Water
+                    </motion.button>
+                    <motion.button
+                      onClick={() => collectPoints(plant.id)}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex items-center px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors border-green-300 bg-green-50 hover:bg-green-100 text-green-700">
+                      <Flower className="mr-2 h-4 w-4" />
+                      Collect
+                    </motion.button>
+                    {plant.level >= 5 && <motion.button
+                      onClick={() => levelUp(plant.id)}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex items-center px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ">
+                      Mint NFT
+                    </motion.button>}
+                  </div>}
+                  <motion.button
+                    onClick={() => levelUp(plant.id)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center px-3 py-2 border rounded-md focus:outline-none focus:ring-2 mt-3">
+                    Pay 20 Stem Points to Level Up
+                  </motion.button>
                 </motion.div>
               ))}
             </AnimatePresence>

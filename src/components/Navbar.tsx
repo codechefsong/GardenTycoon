@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ConnectKitButton } from "connectkit";
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Coins } from 'lucide-react';
 import { useReadContract, useAccount } from 'wagmi';
 import { stemPointsConfig } from '../contracts';
 
@@ -12,7 +12,7 @@ interface NavItem {
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
 
   const { data: balance } = useReadContract({
     address: stemPointsConfig.address,
@@ -48,7 +48,10 @@ const Navbar = () => {
                 {item.label}
               </Link>
             ))}
-             <div>{balance?.toString()} SP</div>
+            {isConnected && <div className='flex'>
+              <p>{balance?.toString()}</p>
+              <Coins />
+            </div>}
             <ConnectKitButton />
           </div>
 

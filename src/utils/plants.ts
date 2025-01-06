@@ -11,7 +11,10 @@ export const PLANT_LEVEL = {
   '2': 'sprout',
   '3': 'growing',
   '4': 'mature',
-  '5': 'flowering'
+  '5': 'flowering',
+  '6': 'flowering',
+  '7': 'flowering',
+  '8': 'flowering'
 };
 
 export const plantCardVariants = {
