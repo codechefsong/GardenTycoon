@@ -17,12 +17,12 @@ const config = createConfig(
     walletConnectProjectId: "",
 
     // Required App Info
-    appName: "Your App Name",
+    appName: "Bloom Together",
 
     // Optional App Info
     appDescription: "Your App Description",
-    appUrl: "https://family.co", // your app's url
-    appIcon: "https://family.co/logo.png", // your app's icon, no bigger than 1024x1024px (max. 1MB)
+    appUrl: "https://bloomtogether.netlify.app/", // your app's url
+    appIcon: "https://bloomtogether.netlify.app/logo.png", // your app's icon, no bigger than 1024x1024px (max. 1MB)
   }),
 );
 
@@ -32,7 +32,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <ConnectKitProvider debugMode>{children}</ConnectKitProvider>
+        <ConnectKitProvider>{children}</ConnectKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );

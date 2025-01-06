@@ -15,6 +15,7 @@ const Navbar = () => {
   const { address, isConnected } = useAccount();
 
   const { data: balance } = useReadContract({
+    //@ts-ignore
     address: stemPointsConfig.address,
     abi: stemPointsConfig.abi,
     functionName: 'balanceOf',

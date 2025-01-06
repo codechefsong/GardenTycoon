@@ -31,6 +31,7 @@ export default function GardenProfile() {
   const [isLoading, setIsLoading] = useState(false);
 
   const { data: playerGardenAddress } = useReadContract({
+    //@ts-ignore
     address: gardenFactoryConfig.address,
     abi: gardenFactoryConfig.abi,
     functionName: 'getPlayerGardenAddress',
@@ -38,18 +39,21 @@ export default function GardenProfile() {
   });
 
   const { data: playerPlants } = useReadContract({
+    //@ts-ignore
     address: playerGardenAddress,
     abi: gardenyConfig.abi,
     functionName: 'getPlants',
   });
 
   const { data: coOwnerAddress } = useReadContract({
+    //@ts-ignore
     address: playerGardenAddress,
     abi: gardenyConfig.abi,
     functionName: 'coOwner',
   });
 
   useWatchContractEvent({
+    //@ts-ignore
     address: playerGardenAddress,
     abi: gardenyConfig.abi,
     eventName: 'Timeline',
@@ -64,7 +68,9 @@ export default function GardenProfile() {
       
       setIsLoading(true);
       try {
+        //@ts-ignore
         const logs = await publicClient.getContractEvents({
+          //@ts-ignore
           address: playerGardenAddress,
           abi: gardenyConfig.abi,
           eventName: 'Timeline',
@@ -82,10 +88,10 @@ export default function GardenProfile() {
   }, [blockNumber, publicClient])
 
   const { data: hash, error, isPending, writeContract  } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = 
-      useWaitForTransactionReceipt({
-        hash,
-      });
+  // const { isLoading: isConfirming, isSuccess: isConfirmed } = 
+  //     useWaitForTransactionReceipt({
+  //       hash,
+  //     });
 
   const plantSeed = () => {
     if (!newPlantName.trim()) return;
@@ -102,6 +108,7 @@ export default function GardenProfile() {
 
   const waterPlant = (plantId: string) => {
     writeContract({
+      //@ts-ignore
       address: playerGardenAddress,
       abi: gardenyConfig.abi,
       functionName: 'waterPlant',
@@ -111,6 +118,7 @@ export default function GardenProfile() {
 
   const collectPoints = (plantId: string) => {
     writeContract({
+      //@ts-ignore
       address: playerGardenAddress,
       abi: gardenyConfig.abi,
       functionName: 'collectPoints',
@@ -120,6 +128,7 @@ export default function GardenProfile() {
 
   const addCoOwner = () => {
     writeContract({
+      //@ts-ignore
       address: playerGardenAddress,
       abi: gardenyConfig.abi,
       functionName: 'setCoOwner',
@@ -129,6 +138,7 @@ export default function GardenProfile() {
 
   const levelUp = (plantId: string) => {
     writeContract({
+      //@ts-ignore
       address: playerGardenAddress,
       abi: gardenyConfig.abi,
       functionName: 'spentPointsToLevelUpPlant',
@@ -136,13 +146,19 @@ export default function GardenProfile() {
     })
   };
 
-  console.log(events, historicalEvents);
+  console.log(hash, error, isPending);
+
+  const canSee = () => {
+    if (myAddress === playeraddress) return true;
+    else if (myAddress === coOwnerAddress) return true;
+    else return false;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">{playeraddress.slice(0, 6)}...{playeraddress.slice(-4)} Garden</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">{playeraddress && playeraddress.slice(0, 6)}...{playeraddress && playeraddress.slice(-4)} Garden</h1>
           <p className='mb-3'>Garden Address {playerGardenAddress}</p>
           <p className='mb-3'>Co Owner {coOwnerAddress}</p>
           
@@ -205,7 +221,7 @@ export default function GardenProfile() {
                   <p className="text-sm text-gray-500">
                     Last Watered: {formatDate(plant?.lastTimeWater?.toString())}
                   </p>
-                  {myAddress === playeraddress && <div className="flex gap-2 mt-3">
+                  {canSee() && <div className="flex gap-2 mt-3">
                     <motion.button
                       onClick={() => waterPlant(plant.id)}
                       whileHover={{ scale: 1.05 }}

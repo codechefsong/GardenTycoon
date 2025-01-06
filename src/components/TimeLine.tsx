@@ -18,8 +18,8 @@ const TimeLine: React.FC<{
       ) : (
         <div className="relative">
           <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200"></div>
-
-          {historicalEvents.map((event, index) => (
+          
+          {historicalEvents.map((event) => (
             <div key={event.transactionHash} className="mb-8 relative">
               <div className="absolute left-4 -translate-x-1/2 w-3 h-3 bg-green-500 rounded-full"></div>
               
