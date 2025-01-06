@@ -1,50 +1,22 @@
-# React + TypeScript + Vite
+# Bloom Together
+An on-chain bonding game with your loved ones, where you nurture a garden of flowers through collaborative care
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Description:
+Bloom Together is an immersive on-chain game designed to strengthen bonds through the shared experience of cultivating a virtual garden. Embark on a journey of growth, care, and rewards as you and your loved ones create a flourishing garden of beautiful flowers.
 
-Currently, two official plugins are available:
+### Plant Your Seeds
+Begin your adventure by planting flower seeds in your virtual garden. Choose from an array of stunning flower species, each with its unique beauty and charm, to create your personalized garden oasis.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Care Together
+Nurture your garden collaboratively with your loved ones. Tend to your flowers by watering them, removing weeds, and ensuring they thrive. As your garden grows, so will the connections you build along the way.
 
-## Expanding the ESLint configuration
+### Collect Rewards
+Earn stem points (ERC-20 tokens) daily as your flowers bloom. The more care and attention you invest, the greater the rewards you can reap, creating a satisfying loop of effort and payoff.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+###  Mint Memory NFTs
+Capture the essence of your most breathtaking blooms by transforming them into Memory NFTs. These unique digital mementos commemorate your shared gardening journey, immortalizing the beauty you’ve created together.
 
-- Configure the top-level `parserOptions` property like this:
+With Bloom Together, grow more than just a garden—cultivate cherished memories and meaningful connections in a delightful, blockchain-powered experience. 🌸
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Garden Factory Contract
+https://block-explorer.testnet.lens.dev/address/0xbe8d16abCAF3bBDeEE861e820Fa5D340aCB84f12#contract
