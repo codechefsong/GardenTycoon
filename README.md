@@ -18,7 +18,13 @@ Capture the essence of your most breathtaking blooms by transforming them into M
 
 With Bloom Together, grow more than just a garden—cultivate cherished memories and meaningful connections in a delightful, blockchain-powered experience. 🌸
 
-## Garden Factory Contract
+## Preview Link:
+https://bloomtogether.netlify.app/
+
+## Demo Video:
+https://youtu.be/xjVhn_0tlvI
+
+## Verify Garden Factory Contract
 https://block-explorer.testnet.lens.dev/address/0xbe8d16abCAF3bBDeEE861e820Fa5D340aCB84f12#contract
 
 ## Screenshots
