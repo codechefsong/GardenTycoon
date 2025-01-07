@@ -20,3 +20,8 @@ With Bloom Together, grow more than just a garden—cultivate cherished memories
 
 ## Garden Factory Contract
 https://block-explorer.testnet.lens.dev/address/0xbe8d16abCAF3bBDeEE861e820Fa5D340aCB84f12#contract
+
+## Screenshots
+- ![img](https://raw.githubusercontent.com/codechefsong/GardenTycoon/refs/heads/main/public/s1.png)
+- ![img](https://raw.githubusercontent.com/codechefsong/GardenTycoon/refs/heads/main/public/s2.png)
+- ![img](https://raw.githubusercontent.com/codechefsong/GardenTycoon/refs/heads/main/public/s3.png)
